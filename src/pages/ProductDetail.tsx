@@ -18,6 +18,9 @@ const ProductDetail = () => {
   const [loading, setLoading] = useState(true);
   
   useEffect(() => {
+    // Scroll to top when component mounts
+    window.scrollTo(0, 0);
+    
     if (id) {
       const productData = getProductById(parseInt(id));
       if (productData) {
