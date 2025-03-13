@@ -1,113 +1,48 @@
-
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ShoppingCart, Menu, X, Search } from 'lucide-react';
+import { ShoppingCart, Menu, X } from 'lucide-react';
 import { useCart } from '../context/CartContext';
-import { Badge } from '@/components/ui/badge';
+import SearchBar from './SearchBar';
 
 const Navbar = () => {
-  const { getCartCount } = useCart();
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { cartItemsCount } = useCart();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   
-  const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen);
-  };
-
-  const cartCount = getCartCount();
-
   return (
-    <header className="bg-white shadow-sm sticky top-0 z-50">
+    <header className="bg-white sticky top-0 z-50 shadow-sm">
       <div className="container-custom py-4">
-        <div className="flex items-center justify-between">
-          {/* Logo */}
-          <Link to="/" className="flex items-center">
-            <h1 className="text-2xl font-bold text-navy">StyleHaven</h1>
-          </Link>
-
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-8">
-            <Link to="/" className="text-gray-700 hover:text-navy font-medium transition-colors">
-              Home
-            </Link>
-            <Link to="/products" className="text-gray-700 hover:text-navy font-medium transition-colors">
-              Shop
-            </Link>
-            <Link to="/about" className="text-gray-700 hover:text-navy font-medium transition-colors">
-              About
-            </Link>
-            <Link to="/contact" className="text-gray-700 hover:text-navy font-medium transition-colors">
-              Contact
-            </Link>
-          </nav>
-
-          {/* Cart and Mobile Menu Toggle */}
-          <div className="flex items-center space-x-4">
-            <button className="text-gray-700 hover:text-navy" aria-label="Search">
-              <Search size={20} />
-            </button>
-            
-            <Link to="/cart" className="text-gray-700 hover:text-navy relative">
-              <ShoppingCart size={20} />
-              {cartCount > 0 && (
-                <Badge className="absolute -top-2 -right-2 bg-coral text-white text-xs min-w-[18px] h-[18px] flex items-center justify-center rounded-full">
-                  {cartCount}
-                </Badge>
-              )}
-            </Link>
-            
+        <div className="flex flex-col md:flex-row justify-between items-center">
+          <div className="flex items-center w-full justify-between md:w-auto mb-4 md:mb-0">
+            <Link to="/" className="font-bold text-2xl text-navy">StyleHaven</Link>
             <button
-              className="md:hidden text-gray-700 hover:text-navy"
-              onClick={toggleMobileMenu}
-              aria-label="Toggle menu"
+              className="block md:hidden"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             >
-              {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+              {mobileMenuOpen ? <X /> : <Menu />}
             </button>
           </div>
+          
+          <div className={`${
+            mobileMenuOpen ? 'flex' : 'hidden'
+          } md:flex flex-col md:flex-row items-center gap-4 w-full md:w-auto`}>
+            <div className="w-full md:w-72 lg:w-96">
+              <SearchBar />
+            </div>
+            
+            <nav className="flex flex-col md:flex-row items-center gap-4 md:gap-6 w-full md:w-auto mt-4 md:mt-0">
+              <Link to="/" className="hover:text-navy transition-colors">Home</Link>
+              <Link to="/products" className="hover:text-navy transition-colors">Products</Link>
+              <Link to="/cart" className="relative flex items-center">
+                <ShoppingCart className="h-5 w-5" />
+                {cartItemsCount > 0 && (
+                  <span className="absolute -top-2 -right-2 bg-coral text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
+                    {cartItemsCount}
+                  </span>
+                )}
+              </Link>
+            </nav>
+          </div>
         </div>
-
-        {/* Mobile Menu */}
-        {isMobileMenuOpen && (
-          <nav className="md:hidden py-4 border-t mt-4 animate-fade-in">
-            <ul className="space-y-4">
-              <li>
-                <Link
-                  to="/"
-                  className="block text-gray-700 hover:text-navy font-medium transition-colors"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  Home
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/products"
-                  className="block text-gray-700 hover:text-navy font-medium transition-colors"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  Shop
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/about"
-                  className="block text-gray-700 hover:text-navy font-medium transition-colors"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  About
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/contact"
-                  className="block text-gray-700 hover:text-navy font-medium transition-colors"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  Contact
-                </Link>
-              </li>
-            </ul>
-          </nav>
-        )}
       </div>
     </header>
   );

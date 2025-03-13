@@ -6,6 +6,7 @@ import { getProductById, Product } from '../data/products';
 import { useCart } from '../context/CartContext';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
+import ProductReviews from '../components/ProductReviews';
 
 const ProductDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -153,6 +154,8 @@ const ProductDetail = () => {
           </div>
         </div>
       </div>
+      
+      {id && <ProductReviews productId={parseInt(id)} />}
     </div>
   );
 };
