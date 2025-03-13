@@ -1,12 +1,17 @@
+
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ShoppingCart, Menu, X } from 'lucide-react';
+import { ShoppingCart, Menu, X, User } from 'lucide-react';
 import { useCart } from '../context/CartContext';
 import SearchBar from './SearchBar';
+import { supabase } from '../integrations/supabase/client';
+import { useNavigate } from 'react-router-dom';
+import { Button } from './ui/button';
 
 const Navbar = () => {
   const { cartItemsCount } = useCart();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const navigate = useNavigate();
   
   return (
     <header className="bg-white sticky top-0 z-50 shadow-sm">
@@ -40,6 +45,15 @@ const Navbar = () => {
                   </span>
                 )}
               </Link>
+              <Button 
+                variant="outline" 
+                size="sm" 
+                className="flex items-center gap-2"
+                onClick={() => navigate('/auth')}
+              >
+                <User className="h-4 w-4" />
+                <span>Login</span>
+              </Button>
             </nav>
           </div>
         </div>
