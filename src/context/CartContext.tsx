@@ -10,6 +10,7 @@ interface CartItem {
 
 interface CartContextType {
   cartItems: CartItem[];
+  cartItemsCount: number; // Add this property to the interface
   addToCart: (product: Product, quantity?: number) => void;
   removeFromCart: (productId: number) => void;
   clearCart: () => void;
@@ -82,10 +83,14 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     return cartItems.reduce((count, item) => count + item.quantity, 0);
   };
 
+  // Calculate the cart items count
+  const cartItemsCount = getCartCount();
+
   return (
     <CartContext.Provider
       value={{
         cartItems,
+        cartItemsCount, // Add this property to the context value
         addToCart,
         removeFromCart,
         clearCart,
