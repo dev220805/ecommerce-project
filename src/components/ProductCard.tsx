@@ -1,10 +1,13 @@
 
 import { Link } from 'react-router-dom';
-import { ShoppingCart } from 'lucide-react';
+import { ShoppingCart, LogIn } from 'lucide-react';
 import { Product } from '../data/products';
 import { useCart } from '../context/CartContext';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
+import { useEffect, useState } from 'react';
+import { supabase } from '../integrations/supabase/client';
+import { useNavigate } from 'react-router-dom';
 
 interface ProductCardProps {
   product: Product;
@@ -12,11 +15,38 @@ interface ProductCardProps {
 
 const ProductCard = ({ product }: ProductCardProps) => {
   const { addToCart } = useCart();
+  const [user, setUser] = useState<any>(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // Get current session
+    const getCurrentUser = async () => {
+      const { data } = await supabase.auth.getSession();
+      setUser(data.session?.user || null);
+    };
+    
+    getCurrentUser();
+    
+    // Listen for auth changes
+    const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
+      setUser(session?.user || null);
+    });
+    
+    return () => {
+      authListener?.subscription.unsubscribe();
+    };
+  }, []);
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
     addToCart(product);
+  };
+
+  const handleGoToLogin = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    navigate('/auth');
   };
 
   return (
@@ -40,13 +70,23 @@ const ProductCard = ({ product }: ProductCardProps) => {
           <p className="font-semibold text-navy">${product.price.toFixed(2)}</p>
         </CardContent>
         <CardFooter className="p-4 pt-0">
-          <Button 
-            className="w-full bg-teal hover:bg-teal/90 gap-2"
-            onClick={handleAddToCart}
-          >
-            <ShoppingCart size={16} />
-            Add to Cart
-          </Button>
+          {user ? (
+            <Button 
+              className="w-full bg-teal hover:bg-teal/90 gap-2"
+              onClick={handleAddToCart}
+            >
+              <ShoppingCart size={16} />
+              Add to Cart
+            </Button>
+          ) : (
+            <Button 
+              className="w-full bg-gray-600 hover:bg-gray-700 gap-2"
+              onClick={handleGoToLogin}
+            >
+              <LogIn size={16} />
+              Login to Purchase
+            </Button>
+          )}
         </CardFooter>
       </Link>
     </Card>

@@ -1,7 +1,9 @@
 
-import { createContext, useContext, useState, ReactNode } from 'react';
+import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { Product } from '../data/products';
 import { toast } from 'sonner';
+import { supabase } from '../integrations/supabase/client';
+import { useNavigate } from 'react-router-dom';
 
 interface CartItem {
   product: Product;
@@ -10,7 +12,7 @@ interface CartItem {
 
 interface CartContextType {
   cartItems: CartItem[];
-  cartItemsCount: number; // Add this property to the interface
+  cartItemsCount: number;
   addToCart: (product: Product, quantity?: number) => void;
   removeFromCart: (productId: number) => void;
   clearCart: () => void;
@@ -23,8 +25,47 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [user, setUser] = useState<any>(null);
+
+  // Check for user session on mount and listen for auth changes
+  useEffect(() => {
+    // Get initial session
+    const getInitialSession = async () => {
+      const { data } = await supabase.auth.getSession();
+      setUser(data.session?.user || null);
+    };
+    
+    getInitialSession();
+    
+    // Set up auth listener
+    const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
+      setUser(session?.user || null);
+      
+      // Clear cart on logout
+      if (event === 'SIGNED_OUT') {
+        setCartItems([]);
+      }
+    });
+    
+    // Cleanup
+    return () => {
+      authListener?.subscription.unsubscribe();
+    };
+  }, []);
 
   const addToCart = (product: Product, quantity = 1) => {
+    // Check if user is authenticated
+    if (!user) {
+      toast.error('Please log in to add items to your cart', {
+        description: 'Your shopping experience is waiting for you after login!',
+        action: {
+          label: 'Login',
+          onClick: () => window.location.href = '/auth'
+        }
+      });
+      return;
+    }
+    
     setCartItems(prevItems => {
       const existingItem = prevItems.find(item => item.product.id === product.id);
       
@@ -90,7 +131,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     <CartContext.Provider
       value={{
         cartItems,
-        cartItemsCount, // Add this property to the context value
+        cartItemsCount,
         addToCart,
         removeFromCart,
         clearCart,

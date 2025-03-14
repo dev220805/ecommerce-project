@@ -1,12 +1,13 @@
 
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { MinusCircle, PlusCircle, ShoppingCart, ArrowLeft } from 'lucide-react';
+import { MinusCircle, PlusCircle, ShoppingCart, ArrowLeft, LogIn } from 'lucide-react';
 import { getProductById, Product } from '../data/products';
 import { useCart } from '../context/CartContext';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import ProductReviews from '../components/ProductReviews';
+import { supabase } from '../integrations/supabase/client';
 
 const ProductDetail = () => {
   const { id } = useParams<{ id: string }>();
@@ -16,18 +17,43 @@ const ProductDetail = () => {
   const [product, setProduct] = useState<Product | null>(null);
   const [quantity, setQuantity] = useState(1);
   const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState<any>(null);
   
   useEffect(() => {
     // Scroll to top when component mounts
     window.scrollTo(0, 0);
     
+    // Get the product data
     if (id) {
       const productData = getProductById(parseInt(id));
       if (productData) {
         setProduct(productData);
       }
     }
-    setLoading(false);
+    
+    // Get the current user
+    const getCurrentUser = async () => {
+      try {
+        const { data } = await supabase.auth.getSession();
+        setUser(data.session?.user || null);
+      } catch (error) {
+        console.error('Error fetching session:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    getCurrentUser();
+    
+    // Set up auth listener
+    const { data: authListener } = supabase.auth.onAuthStateChange((event, session) => {
+      setUser(session?.user || null);
+    });
+    
+    // Cleanup function
+    return () => {
+      authListener?.subscription.unsubscribe();
+    };
   }, [id]);
 
   const handleQuantityChange = (newQuantity: number) => {
@@ -44,6 +70,10 @@ const ProductDetail = () => {
 
   const goBack = () => {
     navigate(-1);
+  };
+
+  const goToLogin = () => {
+    navigate('/auth');
   };
 
   if (loading) {
@@ -129,13 +159,28 @@ const ProductDetail = () => {
           </div>
           
           <div className="flex items-center space-x-4">
-            <Button 
-              className="bg-navy hover:bg-navy/90 flex-1 gap-2"
-              onClick={handleAddToCart}
-            >
-              <ShoppingCart size={16} />
-              Add to Cart
-            </Button>
+            {user ? (
+              <Button 
+                className="bg-navy hover:bg-navy/90 flex-1 gap-2"
+                onClick={handleAddToCart}
+              >
+                <ShoppingCart size={16} />
+                Add to Cart
+              </Button>
+            ) : (
+              <div className="space-y-4 w-full">
+                <p className="text-amber-600 text-sm font-medium">
+                  Please log in to add items to your cart
+                </p>
+                <Button 
+                  className="bg-gray-600 hover:bg-gray-700 flex-1 gap-2 w-full"
+                  onClick={goToLogin}
+                >
+                  <LogIn size={16} />
+                  Login to Purchase
+                </Button>
+              </div>
+            )}
           </div>
           
           <Separator className="my-6" />
