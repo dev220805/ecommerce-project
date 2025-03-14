@@ -66,7 +66,7 @@ export const products: Product[] = [
     name: "Luxury Scented Candle",
     description: "Hand-poured soy wax candle with essential oil fragrance. Burns for up to 60 hours.",
     price: 45.99,
-    imageUrl: "https://images.unsplash.com/photo-1602528495711-f28d13059d35?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1587&q=80",
+    imageUrl: "https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1587&q=80",
     category: "home",
     featured: false,
     inventory: 25
