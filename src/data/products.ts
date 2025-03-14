@@ -36,7 +36,7 @@ export const products: Product[] = [
     name: "Wireless Bluetooth Earbuds",
     description: "High-quality sound, water resistance, and long battery life make these perfect for workouts or daily use.",
     price: 129.99,
-    imageUrl: "https://images.unsplash.com/photo-1606741965429-02935a47ddd3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2569&q=80",
+    imageUrl: "https://images.unsplash.com/photo-1484704849700-f032a568e944?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2570&q=80",
     category: "electronics",
     featured: true,
     inventory: 20
@@ -66,7 +66,7 @@ export const products: Product[] = [
     name: "Luxury Scented Candle",
     description: "Hand-poured soy wax candle with essential oil fragrance. Burns for up to 60 hours.",
     price: 45.99,
-    imageUrl: "https://images.unsplash.com/photo-1603006905393-eac5c8870f26?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1630&q=80",
+    imageUrl: "https://images.unsplash.com/photo-1602528495711-f28d13059d35?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1587&q=80",
     category: "home",
     featured: false,
     inventory: 25
@@ -76,7 +76,7 @@ export const products: Product[] = [
     name: "Premium Coffee Maker",
     description: "Programmable drip coffee maker with built-in grinder. Brew the perfect cup every morning.",
     price: 159.99,
-    imageUrl: "https://images.unsplash.com/photo-1570275239925-4af0aa537554?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1742&q=80",
+    imageUrl: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80",
     category: "kitchen",
     featured: true,
     inventory: 10
