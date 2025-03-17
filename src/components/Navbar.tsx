@@ -58,7 +58,7 @@ const Navbar = () => {
     <header className="bg-white dark:bg-gray-900 sticky top-0 z-50 shadow-sm">
       <div className="container-custom py-4">
         <div className="flex flex-col md:flex-row justify-between items-center">
-          <div className="flex items-center w-full justify-between md:w-auto mb-4 md:mb-0">
+          <div className="flex items-center w-full justify-between md:w-auto">
             <Link to="/" className="font-bold text-2xl text-navy dark:text-white">StyleHaven</Link>
             <div className="flex items-center gap-4">
               <ThemeToggle />
@@ -71,25 +71,50 @@ const Navbar = () => {
             </div>
           </div>
           
-          {/* Search bar for mobile view - appears below the navbar */}
-          <div className={`${
-            mobileMenuOpen ? 'block' : 'hidden'
-          } md:hidden w-full mb-4`}>
+          {/* Search bar for mobile - always visible below navbar */}
+          <div className="md:hidden w-full my-4">
             <SearchBar />
           </div>
           
+          {/* Desktop nav and search */}
           <div className={`${
             mobileMenuOpen ? 'flex' : 'hidden'
-          } md:flex flex-col md:flex-row items-center gap-4 w-full md:w-auto`}>
+          } md:flex flex-col md:flex-row items-center gap-4 w-full md:w-auto fixed md:static top-0 right-0 h-full md:h-auto bg-white dark:bg-gray-900 p-6 md:p-0 shadow-lg md:shadow-none z-50 transition-transform duration-300 transform ${
+            mobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
+          } md:translate-x-0 max-w-[280px] md:max-w-none`}>
+            {/* Close button for mobile sliding menu */}
+            <button 
+              className="absolute top-4 right-4 md:hidden" 
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              <X className="dark:text-white" />
+            </button>
+            
             {/* Search bar for desktop view */}
             <div className="hidden md:block w-full md:w-72 lg:w-96">
               <SearchBar />
             </div>
             
-            <nav className="flex flex-col md:flex-row items-center gap-4 md:gap-6 w-full md:w-auto mt-4 md:mt-0">
-              <Link to="/" className="hover:text-navy dark:text-white dark:hover:text-gray-300 transition-colors">Home</Link>
-              <Link to="/products" className="hover:text-navy dark:text-white dark:hover:text-gray-300 transition-colors">Products</Link>
-              <Link to="/cart" className="relative flex items-center">
+            <nav className="flex flex-col md:flex-row items-center gap-4 md:gap-6 w-full md:w-auto mt-12 md:mt-0">
+              <Link 
+                to="/" 
+                className="hover:text-navy dark:text-white dark:hover:text-gray-300 transition-colors"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Home
+              </Link>
+              <Link 
+                to="/products" 
+                className="hover:text-navy dark:text-white dark:hover:text-gray-300 transition-colors"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                Products
+              </Link>
+              <Link 
+                to="/cart" 
+                className="relative flex items-center"
+                onClick={() => setMobileMenuOpen(false)}
+              >
                 <ShoppingCart className="h-5 w-5 dark:text-white" />
                 {cartItemsCount > 0 && (
                   <span className="absolute -top-2 -right-2 bg-coral text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
@@ -103,7 +128,10 @@ const Navbar = () => {
                   variant="outline" 
                   size="sm" 
                   className="flex items-center gap-2 dark:border-gray-700 dark:text-white"
-                  onClick={handleLogout}
+                  onClick={() => {
+                    handleLogout();
+                    setMobileMenuOpen(false);
+                  }}
                 >
                   <LogOut className="h-4 w-4" />
                   <span>Logout</span>
@@ -113,7 +141,10 @@ const Navbar = () => {
                   variant="outline" 
                   size="sm" 
                   className="flex items-center gap-2 dark:border-gray-700 dark:text-white"
-                  onClick={() => navigate('/auth')}
+                  onClick={() => {
+                    navigate('/auth');
+                    setMobileMenuOpen(false);
+                  }}
                 >
                   <User className="h-4 w-4" />
                   <span>Login</span>
@@ -123,6 +154,14 @@ const Navbar = () => {
           </div>
         </div>
       </div>
+      
+      {/* Overlay for mobile menu */}
+      {mobileMenuOpen && (
+        <div 
+          className="fixed inset-0 bg-black/50 z-40 md:hidden"
+          onClick={() => setMobileMenuOpen(false)}
+        ></div>
+      )}
     </header>
   );
 };
