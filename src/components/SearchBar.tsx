@@ -51,7 +51,7 @@ const SearchBar = ({ className = '' }: { className?: string }) => {
               setShowResults(e.target.value.trim().length > 0);
             }}
             onFocus={handleSearchFocus}
-            className="pr-8 w-full"
+            className="pr-8 w-full dark:bg-gray-800 dark:text-white dark:border-gray-700"
           />
           {searchQuery && (
             <button
@@ -60,26 +60,26 @@ const SearchBar = ({ className = '' }: { className?: string }) => {
                 setSearchQuery('');
                 setShowResults(false);
               }}
-              className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+              className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
             >
               <X size={16} />
             </button>
           )}
         </div>
-        <Button type="submit" variant="ghost" className="ml-1">
+        <Button type="submit" variant="ghost" className="ml-1 dark:text-white">
           <Search size={20} />
         </Button>
       </form>
 
       {showResults && filteredProducts.length > 0 && (
         <div 
-          className="absolute z-20 w-full mt-1 bg-white rounded-md shadow-lg border border-gray-200 max-h-[300px] overflow-y-auto"
+          className="absolute z-20 w-full mt-1 bg-white dark:bg-gray-800 rounded-md shadow-lg border border-gray-200 dark:border-gray-700 max-h-[300px] overflow-y-auto"
           onMouseDown={(e) => e.preventDefault()} // Prevents blur event from firing before click
         >
           {filteredProducts.map(product => (
             <div
               key={product.id}
-              className="p-3 hover:bg-gray-100 cursor-pointer border-b border-gray-100 last:border-0"
+              className="p-3 hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer border-b border-gray-100 dark:border-gray-700 last:border-0"
               onClick={() => handleProductClick(product.id)}
             >
               <div className="flex items-center">
@@ -91,15 +91,15 @@ const SearchBar = ({ className = '' }: { className?: string }) => {
                   />
                 </div>
                 <div>
-                  <p className="font-medium">{product.name}</p>
-                  <p className="text-sm text-gray-600 truncate">{product.category}</p>
+                  <p className="font-medium dark:text-white">{product.name}</p>
+                  <p className="text-sm text-gray-600 dark:text-gray-300 truncate">{product.category}</p>
                 </div>
               </div>
             </div>
           ))}
-          <div className="p-2 text-center bg-gray-50">
+          <div className="p-2 text-center bg-gray-50 dark:bg-gray-900">
             <button 
-              className="text-sm text-teal"
+              className="text-sm text-teal dark:text-teal-300"
               onClick={() => {
                 if (searchQuery.trim()) {
                   navigate(`/products?search=${encodeURIComponent(searchQuery.trim())}`);
