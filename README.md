@@ -1,69 +1,67 @@
-# Welcome to your Lovable project
+📌 Description
+This is a modern, fully functional e-commerce website with user authentication built using Supabase for backend services and Tailwind CSS for styling. The project enables users to browse products, add them to a cart, and complete transactions seamlessly.
 
-## Project info
+🚀 Features
+✅ User Authentication (Signup/Login using Supabase)
+✅ Product Listing & Details
+✅ Shopping Cart Management
+✅ Secure Checkout Process
+✅ Responsive Design (Tailwind CSS)
+✅ Real-time Database Operations
 
-**URL**: https://lovable.dev/projects/ed2d9a3e-dbcf-446a-9244-a9b70c267a44
+🛠️ Tech Stack
+Frontend:
+React (with Vite)
+Tailwind CSS
+Backend & Database:
+Supabase (PostgreSQL, Authentication, and Storage)
+⚙️ Installation & Setup
+1️⃣ Clone the repository
+bash
+Copy
+Edit
+git clone https://github.com/dev220805/ecommerce-project.git
+cd ecommerce-project
+2️⃣ Install dependencies
+bash
+Copy
+Edit
+npm install  # or yarn install
+3️⃣ Set up environment variables
+Create a .env file in the root directory and add the following:
 
-## How can I edit this code?
+env
+Copy
+Edit
+4️⃣ Run the development server
+bash
+Copy
+Edit
+npm run dev  # or yarn dev
+The project will be available at http://localhost:5173
 
-There are several ways of editing your application.
+🔑 Authentication
+This project uses Supabase Auth for user authentication. Users can sign up, log in, and manage their sessions.
 
-**Use Lovable**
+🛒 How to Use
+1️⃣ Sign up / Log in using the authentication system.
+2️⃣ Browse Products from the homepage.
+3️⃣ Add Items to Cart and proceed to checkout.
+4️⃣ Complete the order securely.
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/ed2d9a3e-dbcf-446a-9244-a9b70c267a44) and start prompting.
+🎨 Styling
+The project is styled using Tailwind CSS to ensure a sleek and responsive design.
 
-Changes made via Lovable will be committed automatically to this repo.
+🤝 Contributing
+If you'd like to contribute:
 
-**Use your preferred IDE**
+Fork the repo
+Create a new branch (feature-new-component)
+Commit changes
+Push and submit a PR
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+📧 Contact
+For any queries, feel free to reach out:
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
-
-**Edit a file directly in GitHub**
-
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
-
-**Use GitHub Codespaces**
-
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
-
-## What technologies are used for this project?
-
-This project is built with .
-
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/ed2d9a3e-dbcf-446a-9244-a9b70c267a44) and click on Share -> Publish.
-
-## I want to use a custom domain - is that possible?
-
-We don't support custom domains (yet). If you want to deploy your project under your own domain then we recommend using Netlify. Visit our docs for more details: [Custom domains](https://docs.lovable.dev/tips-tricks/custom-domain/)
+GitHub: dev220805
+Email: devnashbansal05@gmail.com
